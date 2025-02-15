@@ -6,8 +6,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database.orm import PromptORM
 from difflib import ndiff
 
-from utils import important_print
-
 class Category(BaseModel):
     category: str
 
@@ -40,7 +38,6 @@ router = APIRouter(prefix="/prompts", tags=["prompts"])
 async def create_prompt(prompt: PromptCreate, db: AsyncSession = Depends(get_db)):
     try:
         prompt = await PromptORM.add_prompt(prompt.model_dump(), db)
-        important_print(prompt)
         return Prompt.model_validate(prompt)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -49,7 +46,6 @@ async def create_prompt(prompt: PromptCreate, db: AsyncSession = Depends(get_db)
 async def get_prompts(category: str, with_history: bool = False, db: AsyncSession = Depends(get_db)):
     try:
         prompts = await PromptORM.get_version(category, with_history, db)
-        important_print(prompts)
         if prompts:
             if with_history:
                 return PromptsWithDiff(prompts=[Prompt.model_validate(prompt) for prompt in prompts])

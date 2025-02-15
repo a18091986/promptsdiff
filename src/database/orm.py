@@ -2,7 +2,6 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database.schema import Category, Prompt
 from dataclasses import dataclass
-from utils import important_print
 
 
 
@@ -40,8 +39,3 @@ class PromptORM():
         except Exception as e:
             print(e)
             return None
-
-
-    # @staticmethod
-    # async def get_prompt(prompt_id: int, db: AsyncSession):
-    #     return await db.query(Prompt).filter(Prompt.id == prompt_id).first()

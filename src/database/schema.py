@@ -17,8 +17,6 @@ class Category(Base):
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, default=datetime.now)
     updated_at: Mapped[datetime] = mapped_column(TIMESTAMP, default=datetime.now)
 
-    # versions: Mapped[list["PromptVersion"]] = relationship(back_populates="prompt")
-
 class Prompt(Base):
     __tablename__ = "prompts"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
