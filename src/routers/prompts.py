@@ -47,10 +47,7 @@ async def get_prompts(category: str, with_history: bool = False, db: AsyncSessio
     try:
         prompts = await PromptORM.get_version(category, with_history, db)
         if prompts:
-            if with_history:
-                return PromptsWithDiff(prompts=[Prompt.model_validate(prompt) for prompt in prompts])
-            else:
-                return PromptsWithDiff(prompts=[Prompt.model_validate(prompt) for prompt in prompts])
+            return PromptsWithDiff(prompts=[Prompt.model_validate(prompt) for prompt in prompts])
         else:
             raise HTTPException(status_code=404, detail="Prompt not found")
     except Exception as e:
